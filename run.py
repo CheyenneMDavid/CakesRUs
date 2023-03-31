@@ -1,4 +1,5 @@
 import sys
+import re
 import gspread
 from google.oauth2.service_account import (
     Credentials,
@@ -67,4 +68,47 @@ def get_valid_login():
     sys.exit()
 
 
-get_valid_login()
+def get_valid_customer_name():
+    """
+    Request user input for first name. Validate using regex pattern.
+    Request user input for second name. Validate using regex pattern.
+    Regex pattern allows for uppercase, lowercase, hyphens and apostrophes.
+    Use f-strings to inform user of incorrect input.
+    Both requests will individually loop until valid input is submitted,
+    before continuing.
+    Create new variable of "customer_full_name" by joining first name
+    and last name together.
+    Apply "title()" method to change first letter of name or parts of a
+    name that may be seperated by a hyphen or apostrophe.
+    Result is "betty-boo" would become "Betty-Boo" and "o'brien" would
+    would become "O'Brien".
+    """
+    pattern = re.compile(
+        r"^[A-Za-z]{1,2}([A-Za-z'-]+[a-z])?(,? [A-Z][A-Za-z'-]+[a-z])*$"
+    )
+    # The Regex pattern for this code is from the StackOverflow site, here:
+    # https://stackoverflow.com/questions/39895282/improving-the-below-regex-
+    # for-us-and-uk-names
+    # I changed it and tested the change her: https://regexr.com/
+    while True:
+        first_name = input(
+            "Please enter customer's first name."
+            "Hyphens and apostorophes are allowed: \n"
+        )
+        if pattern.match(first_name):
+            break
+        print(f"{first_name} is NOT a valid first name")
+
+    while True:
+        last_name = input("Please enter customer's last name:  ")
+        if pattern.match(last_name):
+            break
+        print(f"{last_name} is NOT a valid last name")
+
+    customer_full_name = first_name.title() + " " + last_name.title()
+    print(customer_full_name)
+    return customer_full_name
+
+
+# get_valid_login()
+get_valid_customer_name()
