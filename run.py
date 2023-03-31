@@ -110,5 +110,34 @@ def get_valid_customer_name():
     return customer_full_name
 
 
+def get_valid_address():
+    """
+    Request input from user for first of first line of address.
+    Use Regex pattern to validate input.  The pattern allows a match using
+    "flat", flat number and a letter.  For example: Flat 5b.
+    Then, house number, street name, and allows for endings such as
+    "drive, close, st, rd", with whitespaces where needed most.
+    Loop until input is valid.
+    Use f-strings to inform user of incorrect input.
+    """
+    # RegEx pattern created and tested at: https://regexr.com/
+
+    pattern = re.compile(
+        r"^(?:flat)?\s*\d*[,_]?\s*\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*"
+    )
+    while True:
+        address = input("enter first line of address:  ")
+        if pattern.match(address):
+            break
+        print(
+            f"{address} is not a valid address.  Please enter a valid"
+            "first line of address"
+        )
+    titled_address = address.title()
+    print(titled_address)
+    return titled_address
+
+
 # get_valid_login()
-get_valid_customer_name()
+# get_valid_customer_name()
+get_valid_address()
