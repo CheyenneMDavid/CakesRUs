@@ -158,7 +158,34 @@ def get_valid_postcode():
     return uppered_postcode
 
 
+def get_valid_customer_number():
+    """
+    Request user input of a valid UK phone number. Validate with RegEx
+    pattern.
+    Loop request until a valid input it entered.
+    Use f-string to inform user of incorrect input
+    """
+    # The Regex pattern for this code is from the StackOverflow site, here:
+    # https://stackoverflow.com/questions/11518035/regular-expression-for-
+    # gb-based-and-only-numeric-phone-number
+    pattern = re.compile(
+        r"^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|"
+        r"((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|"
+        r"((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"
+    )
+
+    while True:
+        phone_number = input("Please enter a valid UK phone number: \n")
+        if pattern.match(phone_number):
+            print("Thank you \n")
+            return phone_number
+        print(
+            f"You entered '{phone_number}'. This an invalid phone number \n"
+        )
+
+
 # get_valid_login()
 # get_valid_customer_name()
 # get_valid_address()
-get_valid_postcode()
+# get_valid_postcode()
+get_valid_customer_number()
