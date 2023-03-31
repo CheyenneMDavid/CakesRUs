@@ -138,6 +138,27 @@ def get_valid_address():
     return titled_address
 
 
+def get_valid_postcode():
+
+    """
+    Request user input of valid UK postcode.  Validation by Regex pattern
+    Loop request till input is valid.
+    Use f-string to inform user of incorrect input
+    Apply Uppercase.
+    """
+    pattern = re.compile(r"^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\s?\d[A-Za-z]{2}$")
+
+    while True:
+        postcode = input("Please enter a valid postcode:  ")
+        if pattern.match(postcode):
+            break
+        print(f"{postcode} is an invalid format.")
+    uppered_postcode = postcode.upper()
+    print(uppered_postcode)
+    return uppered_postcode
+
+
 # get_valid_login()
 # get_valid_customer_name()
-get_valid_address()
+# get_valid_address()
+get_valid_postcode()
