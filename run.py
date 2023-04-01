@@ -245,10 +245,56 @@ def choose_cake():
         print("Invalid input, please choose a valid cake.")
 
 
+def date_required():
+    """
+    Informs user of todays date and the earliest available date for cakes
+    to be delivered.
+    Requests user input of the date that the customer wants the cake
+    delivered.
+    If the requested date falls on a Sunday or is within 14 days, the user
+    is requested to enter a different date.
+    Dates are displayed in dd/mm/yyy format for ease of reading by user.
+    """
+
+    print("Cakes cannot be ordered for Sunday deliveries")
+    print("Cakes must be ordered two weeks in advance of required date.")
+
+    today = date.today()
+    next_delivery_date = today + timedelta(days=14)
+
+    print(
+        f"Today's date is '{today.strftime('%d/%m/%Y')}', so the delivery "
+        "date must be a minimum of 14 days from now."
+        f"{next_delivery_date.strftime('%d/%m/%Y')} is the earliest date "
+        "available"
+    )
+
+    while True:
+        required_date = input(
+            "Please enter date the customer requires the cake (DD/MM/YYYY): "
+        )
+        required_date = datetime.strptime(required_date, "%d/%m/%Y").date()
+
+        day_of_week = required_date.weekday()
+
+        order_date = date.today()
+        time_gap = required_date - order_date
+
+        if day_of_week != 6 and time_gap.days >= 14:
+            return required_date
+        else:
+            print(
+                "This date is not valid. "
+                "Please ensure the date is at least two "
+                "weeks away and not on a Sunday."
+            )
+
+
 # get_valid_login()
 # get_valid_customer_name()
 # get_valid_address()
 # get_valid_postcode()
 # get_valid_customer_number()
 # get_valid_customer_email()
-choose_cake()
+# choose_cake()
+date()
