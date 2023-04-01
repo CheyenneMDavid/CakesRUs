@@ -283,7 +283,6 @@ def date_required():
 
         if day_of_week != 6 and time_gap.days >= 14:
             return required_date
-        else:
             print(
                 "This date is not valid. "
                 "Please ensure the date is at least two "
@@ -307,6 +306,11 @@ def write_to_csv(
     called "cakes.csv" by creating a new dataframe called "new_row" and then
     "new_row" is added to the original "df".
     """
+
+    # Mega thanks to the efforts of Keith Galli and his YouTube channel
+    # here: https://www.youtube.com/watch?v=vmEHCJofslg&t=1715s 
+    # And his resources here: https://github.com/KeithGalli/pandas
+    # which helped me really a lot for this project.
     df = pd.read_csv("cakes.csv")
 
     new_row = pd.DataFrame(
@@ -328,6 +332,23 @@ def write_to_csv(
     df.to_csv("cakes.csv", index=False)
 
     print("Order details recorded. \n \n")
+
+
+def update_sheets():
+    """
+    Uses the previously updated CSV file to update Google Sheets
+    """
+    worksheets = SHEET.get_worksheet(0)
+    df = pd.read_csv("cakes.csv")
+    row = df.shape[0]
+    column = df.shape[1]
+
+    cells_list = worksheets.range(f"A2:{chr(ord('A') + column - 1)}{row + 1}")
+    for cell, value in zip(cells_list, df.values.flatten()):
+        cell.value = value
+    worksheets.update_cells(cells_list)
+    
+    print("Google Sheets updated")
 
 
 def main():
@@ -353,6 +374,8 @@ def main():
         order_date,
         cost,
     )
+
+    update_sheets()
 
 
 get_valid_login()
