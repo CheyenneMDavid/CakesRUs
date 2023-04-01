@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime, timedelta, date
 import re
 import gspread
 from google.oauth2.service_account import (
@@ -210,9 +211,44 @@ def get_valid_customer_email():
         print(f"{email} is not a valid email")
 
 
+def choose_cake():
+    """
+    Print cakes available for order to screen.
+    Use dictionary with keys and values for the cakes and cake prices
+    Request input from user, for cake customer wishes to order.
+    Keeping the input short and to the point, with 'girl', 'boy', '18'and
+    'wedding'
+    Using a standard if and else to handle the input with "Invalid input"
+    printed to the screen.
+    Return value of "order_date" for when the cake was ordered using
+    the datetime module.
+    """
+    print("Cakes available to order: \n")
+    print("New Baby Boy, cost £35.00")
+    print("New Baby Girl, cost £35.00")
+    print("Wedding, £70")
+    print("18th Birthday, cost £35.00 \n")
+
+    cakes = {"girl": 35, "boy": 35, "18": 35, "wedding": 70}
+
+    while True:
+        cake_choice = input(
+            "Enter Cake type as: 'Boy', 'Girl', 'Wedding' or '18'  "
+        )
+        if cake_choice in cakes:
+            cost = f"£{cakes[cake_choice]}"
+            cake_type = cake_choice.capitalize()
+            order_date = datetime.now().strftime("%d-%m-%Y")
+            print(f"Cake type: {cake_type} cake  -  Cost: {cost}")
+            print(f"Ordered on:  {order_date}")
+            return cost, cake_type, order_date
+        print("Invalid input, please choose a valid cake.")
+
+
 # get_valid_login()
 # get_valid_customer_name()
 # get_valid_address()
 # get_valid_postcode()
 # get_valid_customer_number()
-get_valid_customer_email()
+# get_valid_customer_email()
+choose_cake()
