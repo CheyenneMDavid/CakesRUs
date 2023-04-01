@@ -184,8 +184,35 @@ def get_valid_customer_number():
         )
 
 
+def get_valid_customer_email():
+    """
+    Request user input of valid email address. Validate with regex pattern.
+    """
+    # Regex pattern for email validation borrowed from StackOverflow, from
+    # this page, here: https://stackoverflow.com/questions/201323/how-can-i
+    # -validate-an-email-address-using-a-regular-expression
+    pattern = re.compile(
+        r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"
+        r"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|"
+        r"\\[\x01-\x09\x0b\x0c\x0e-\x7f])*"
+        r")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*"
+        r"[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|"
+        r"[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|"
+        r"[1-9]?[0-9])|[a-z0-9-]*"
+        r"[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|"
+        r"\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
+    )
+    while True:
+        email = input("Please enter a valid email address:  ")
+        if pattern.match(email):
+            print("thank you")
+            return email
+        print(f"{email} is not a valid email")
+
+
 # get_valid_login()
 # get_valid_customer_name()
 # get_valid_address()
 # get_valid_postcode()
-get_valid_customer_number()
+# get_valid_customer_number()
+get_valid_customer_email()
