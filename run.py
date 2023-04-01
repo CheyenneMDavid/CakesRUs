@@ -31,6 +31,8 @@ def get_valid_login():
     screen that the maximum tries have been reached and program then exits.
     Else, if there is a match, Welcome screen is printed.
     """
+    # Dictionary storing "username" and "password" as the keys and "Staff" and
+    # "Cakes" as their respective values.
     user_creds = {
         "username": "Staff",
         "password": "Cakes123",
@@ -40,6 +42,9 @@ def get_valid_login():
         "Please login. Remember, passwords and usernames are case sensitive"
     )
 
+    # Using the range method, with i as the variable, 1 is added to i eachtime
+    # a wrong attmpt is made, until the final 3rd attempt.
+    # An f-string is used to display the attempt number against the 3 allowed.
     for i in range(3):
         print(f"Attempt {i+1}/3:")
 
@@ -50,7 +55,7 @@ def get_valid_login():
             username == user_creds["username"]
             and password == user_creds["password"]
         ):
-
+            # Granted upon password match and print's welcome screen.
             print("Access granted \n")
 
             print("                =================================== \n")
@@ -59,14 +64,26 @@ def get_valid_login():
             print("                Happy Cake Customers always return!! \n")
             print("                ==================================== \n")
 
+            # Returning a true when there's a match, exiting the loop.
             return True
+
+        # Executed when user enters incorrect username and passwords.
         print("Access denied ")
 
+        # attempts_left, is the changing value of whatever 3(maximum attempts)
+        # minus the changing value of i + 1, depending on howmany times the
+        # for loop has been executed.
         attempts_left = 3 - (i + 1)
+
+        # The if statement executes, all the time that the value of
+        # "attempts_left" is greater than "0"
         if attempts_left > 0:
+
+            # String literal used to display the remaining number of attempts.
             print(f"You have {attempts_left} attempt(s) remaining.")
     print("Maximum login attempts reached. Access denied")
 
+    # Used to exit after the maximum number of failed attempts is reached.
     sys.exit()
 
 
@@ -107,9 +124,14 @@ def get_valid_customer_name():
             break
         print(f"{last_name} is NOT a valid last name")
 
-    customer_full_name = first_name.title() + " " + last_name.title()
-    print(customer_full_name)
-    return customer_full_name
+    # full_name variable created by concatenation of the first_name and
+    # last_name variables, and title method applied to give each name a
+    # capital letter, even if hyphenated.
+    full_name = first_name.title() + " " + last_name.title()
+    print(full_name)
+
+    # Returns the variable "full_name", so it can be used by other functions.
+    return full_name
 
 
 def get_valid_address():
@@ -123,20 +145,29 @@ def get_valid_address():
     Use f-strings to inform user of incorrect input.
     """
     # RegEx pattern created and tested at: https://regexr.com/
-
+    # Pattern optional flat numbers before the actual street address
     pattern = re.compile(
         r"^(?:flat)?\s*\d*[,_]?\s*\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*"
     )
     while True:
         address = input("enter first line of address:  ")
+
+        # If there's a pattern match, the code breaks. Otherwise, it
+        # uses a string literal to tell the user that their input wasn't
+        # valid and request they try again.
         if pattern.match(address):
             break
         print(
             f"{address} is not a valid address.  Please enter a valid"
             "first line of address"
         )
+    # If the input is valid, title method is applied, creating the new variable
+    # "titled_address"
     titled_address = address.title()
     print(titled_address)
+
+    # Returns the variable "titled_address", so it can then be used by
+    #  other functions.
     return titled_address
 
 
@@ -205,6 +236,7 @@ def get_valid_customer_email():
         r"\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
     )
     while True:
+
         email = input("Please enter a valid email address:  ")
         if pattern.match(email):
             print("thank you")
@@ -283,11 +315,11 @@ def date_required():
 
         if day_of_week != 6 and time_gap.days >= 14:
             return required_date
-            print(
-                "This date is not valid. "
-                "Please ensure the date is at least two "
-                "weeks away and not on a Sunday."
-            )
+        print(
+            "This date is not valid. "
+            "Please ensure the date is at least two "
+            "weeks away and not on a Sunday."
+        )
 
 
 def write_to_csv(
@@ -308,7 +340,7 @@ def write_to_csv(
     """
 
     # Mega thanks to the efforts of Keith Galli and his YouTube channel
-    # here: https://www.youtube.com/watch?v=vmEHCJofslg&t=1715s 
+    # here: https://www.youtube.com/watch?v=vmEHCJofslg&t=1715s
     # And his resources here: https://github.com/KeithGalli/pandas
     # which helped me really a lot for this project.
     df = pd.read_csv("cakes.csv")
@@ -347,7 +379,6 @@ def update_sheets():
     for cell, value in zip(cells_list, df.values.flatten()):
         cell.value = value
     worksheets.update_cells(cells_list)
-    
     print("Google Sheets updated")
 
 
