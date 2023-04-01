@@ -1,6 +1,7 @@
 import sys
 from datetime import datetime, timedelta, date
 import re
+import pandas as pd
 import gspread
 from google.oauth2.service_account import (
     Credentials,
@@ -290,11 +291,70 @@ def date_required():
             )
 
 
-# get_valid_login()
-# get_valid_customer_name()
-# get_valid_address()
-# get_valid_postcode()
-# get_valid_customer_number()
-# get_valid_customer_email()
-# choose_cake()
-date()
+def write_to_csv(
+    full_name,
+    street_address,
+    postcode,
+    phone_number,
+    email,
+    required_date,
+    cake_type,
+    order_date,
+    cost,
+):
+    """
+    Uses variables created by the other functions to update the CSV file
+    called "cakes.csv" by creating a new dataframe called "new_row" and then
+    "new_row" is added to the original "df".
+    """
+    df = pd.read_csv("cakes.csv")
+
+    new_row = pd.DataFrame(
+        {
+            "Full name": [full_name],
+            "First line of address": [street_address.title()],
+            "Postcode": [postcode.upper()],
+            "Phone number": [phone_number],
+            "Email address": [email],
+            "Date required": [required_date],
+            "Cake type": [cake_type],
+            "Cost": [cost],
+            "Date ordered": [order_date],
+        }
+    )
+
+    df = pd.concat([df, new_row], ignore_index=True)
+
+    df.to_csv("cakes.csv", index=False)
+
+    print("Order details recorded. \n \n")
+
+
+def main():
+    """
+    Run all program functions
+    """
+    full_name = get_valid_customer_name()
+    street_address = get_valid_address()
+    postcode = get_valid_postcode()
+    phone_number = get_valid_customer_number()
+    email = get_valid_customer_email()
+    cost, cake_type, order_date = choose_cake()
+    required_date = date_required()
+
+    write_to_csv(
+        full_name,
+        street_address,
+        postcode,
+        phone_number,
+        email,
+        required_date,
+        cake_type,
+        order_date,
+        cost,
+    )
+
+
+get_valid_login()
+
+main()
