@@ -167,7 +167,7 @@ def get_valid_address():
     print(titled_address)
 
     # Returns the variable "titled_address", so it can then be used by
-    #  other functions.
+    # other functions.
     return titled_address
 
 
@@ -179,8 +179,15 @@ def get_valid_postcode():
     Use f-string to inform user of incorrect input
     Apply Uppercase.
     """
-    pattern = re.compile(r"^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\s?\d[A-Za-z]{2}$")
-
+    # Pattern for postcode was borrowed from Stack Overflow at this page
+    # here: https://stackoverflow.com/questions/164979/regex-for-matching-
+    # uk-postcodes , which says that the pattern was originally supplied
+    # by the uk government, so probably the most comprehensive, at this point.
+    pattern = re.compile(
+        r"([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|"
+        r"(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|"
+        r"([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})"
+    )
     while True:
         postcode = input("Please enter a valid postcode:  ")
         if pattern.match(postcode):
@@ -382,33 +389,34 @@ def update_sheets():
     print("Google Sheets updated")
 
 
-def main():
-    """
-    Run all program functions
-    """
-    full_name = get_valid_customer_name()
-    street_address = get_valid_address()
-    postcode = get_valid_postcode()
-    phone_number = get_valid_customer_number()
-    email = get_valid_customer_email()
-    cost, cake_type, order_date = choose_cake()
-    required_date = date_required()
+get_valid_postcode()
+# def main():
+#     """
+#     Run all program functions
+#     """
+#     full_name = get_valid_customer_name()
+#     street_address = get_valid_address()
+#     postcode = get_valid_postcode()
+#     phone_number = get_valid_customer_number()
+#     email = get_valid_customer_email()
+#     cost, cake_type, order_date = choose_cake()
+#     required_date = date_required()
 
-    write_to_csv(
-        full_name,
-        street_address,
-        postcode,
-        phone_number,
-        email,
-        required_date,
-        cake_type,
-        order_date,
-        cost,
-    )
+#     write_to_csv(
+#         full_name,
+#         street_address,
+#         postcode,
+#         phone_number,
+#         email,
+#         required_date,
+#         cake_type,
+#         order_date,
+#         cost,
+#     )
 
-    update_sheets()
+#     update_sheets()
 
 
-get_valid_login()
+# get_valid_login()
 
-main()
+# main()
