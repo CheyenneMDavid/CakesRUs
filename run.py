@@ -1,3 +1,4 @@
+# All imported modules that are used in the application.
 import sys
 from datetime import datetime, timedelta, date
 import re
@@ -7,6 +8,7 @@ from google.oauth2.service_account import (
     Credentials,
 )
 
+# The OAuth 2.0 scopes for accessing the APIs
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -48,6 +50,7 @@ def get_valid_login():
     for i in range(3):
         print(f"Attempt {i+1}/3:")
 
+        # Requests user input which is validated using the "user_creds".
         username = input("Please enter your username:  ")
         password = input("Please enter your password:  ")
 
@@ -64,7 +67,7 @@ def get_valid_login():
             print("                Happy Cake Customers always return!! \n")
             print("                ==================================== \n")
 
-            # Returning a true when there's a match, exiting the loop.
+            # Returns "True" when there's a match and exits the loop.
             return True
 
         # Executed when user enters incorrect username and passwords.
@@ -78,7 +81,6 @@ def get_valid_login():
         # The if statement executes, all the time that the value of
         # "attempts_left" is greater than "0"
         if attempts_left > 0:
-
             # String literal used to display the remaining number of attempts.
             print(f"You have {attempts_left} attempt(s) remaining.")
     print("Maximum login attempts reached. Access denied")
@@ -102,13 +104,14 @@ def get_valid_customer_name():
     Result is "betty-boo" would become "Betty-Boo" and "o'brien" would
     would become "O'Brien".
     """
-    pattern = re.compile(
-        r"^[A-Za-z]{1,2}([A-Za-z'-]+[a-z])?(,? [A-Z][A-Za-z'-]+[a-z])*$"
-    )
     # The Regex pattern for this code is from the StackOverflow site, here:
     # https://stackoverflow.com/questions/39895282/improving-the-below-regex-
     # for-us-and-uk-names
     # I changed it and tested the change her: https://regexr.com/
+    pattern = re.compile(
+        r"^[A-Za-z]{1,2}([A-Za-z'-]+[a-z])?(,? [A-Z][A-Za-z'-]+[a-z])*$"
+    )
+
     while True:
         first_name = input(
             "Please enter customer's first name."
@@ -137,8 +140,8 @@ def get_valid_customer_name():
 def get_valid_address():
     """
     Request input from user for first of first line of address.
-    Use Regex pattern to validate input.  The pattern allows a match using
-    "flat", flat number and a letter.  For example: Flat 5b.
+    Use Regex pattern to validate input.  The pattern allows for the option of
+    using "flat", flat number and a letter.  For example: Flat 5b.
     Then, house number, street name, and allows for endings such as
     "drive, close, st, rd", with whitespaces where needed most.
     Loop until input is valid.
@@ -149,6 +152,7 @@ def get_valid_address():
     pattern = re.compile(
         r"^(?:flat)?\s*\d*[,_]?\s*\d+\s+[A-Za-z]+(?:\s+[A-Za-z]+)*"
     )
+
     while True:
         address = input("enter first line of address:  ")
 
@@ -172,7 +176,6 @@ def get_valid_address():
 
 
 def get_valid_postcode():
-
     """
     Request user input of valid UK postcode.  Validation by Regex pattern
     Loop request till input is valid.
@@ -182,19 +185,28 @@ def get_valid_postcode():
     # Pattern for postcode was borrowed from Stack Overflow at this page
     # here: https://stackoverflow.com/questions/164979/regex-for-matching-
     # uk-postcodes , which says that the pattern was originally supplied
-    # by the uk government, so probably the most comprehensive, at this point.
+    # by the uk government, so probably the most comprehensive, without using
+    # a subscription API
     pattern = re.compile(
         r"([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|"
         r"(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|"
         r"([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})"
     )
+
     while True:
+        # Requests user input
         postcode = input("Please enter a valid postcode:  ")
         if pattern.match(postcode):
             break
         print(f"{postcode} is an invalid format.")
+
+    # If the input is valid, title method is applied, creating the new variable
+    # "uppered_postcode"
     uppered_postcode = postcode.upper()
     print(uppered_postcode)
+
+    # Returns the variable "uppered_postcode", so it can then be used by
+    # other functions.
     return uppered_postcode
 
 
@@ -203,7 +215,7 @@ def get_valid_customer_number():
     Request user input of a valid UK phone number. Validate with RegEx
     pattern.
     Loop request until a valid input it entered.
-    Use f-string to inform user of incorrect input
+    Use f-string to inform user of incorrect input.
     """
     # The Regex pattern for this code is from the StackOverflow site, here:
     # https://stackoverflow.com/questions/11518035/regular-expression-for-
@@ -242,8 +254,11 @@ def get_valid_customer_email():
         r"[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|"
         r"\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
     )
-    while True:
 
+    while True:
+        # Requests user input for email, matches against the regex pattern
+        # in order to validate and  returns "email" so it can be used by
+        # other functions.
         email = input("Please enter a valid email address:  ")
         if pattern.match(email):
             print("thank you")
@@ -263,15 +278,24 @@ def choose_cake():
     Return value of "order_date" for when the cake was ordered using
     the datetime module.
     """
+
+    # Prints to the terminal, telling the user which cakes are available cakes
+    # that are available to order and their price
     print("Cakes available to order: \n")
     print("New Baby Boy, cost £35.00")
     print("New Baby Girl, cost £35.00")
     print("Wedding, £70")
     print("18th Birthday, cost £35.00 \n")
 
+    # Dictionary to keep the cake types as keys and the prices as the values.
     cakes = {"girl": 35, "boy": 35, "18": 35, "wedding": 70}
 
     while True:
+        # Requests user input for choice of cake.  If the input is valid,
+        # the dictionary containing the key and values of cake type and
+        # price are used to create the variables of "cost" and "cake_type"
+        # and are returned along with the variable "order_date", so they
+        # can be used by other functions.
         cake_choice = input(
             "Enter Cake type as: 'Boy', 'Girl', 'Wedding' or '18'  "
         )
@@ -282,7 +306,10 @@ def choose_cake():
             print(f"Cake type: {cake_type} cake  -  Cost: {cost}")
             print(f"Ordered on:  {order_date}")
             return cost, cake_type, order_date
-        print("Invalid input, please choose a valid cake.")
+        print(
+            f" You chose '{cake_choice}', which was NOT a valid choice,"
+            f"please choose from the list of available cakes, correctly."
+        )
 
 
 def date_required():
@@ -299,6 +326,9 @@ def date_required():
     print("Cakes cannot be ordered for Sunday deliveries")
     print("Cakes must be ordered two weeks in advance of required date.")
 
+    # Used to ensure that the required delivery dates are not earlier
+    # than two weeks by using the date.today method and timedelta with
+    # a difference of 14days
     today = date.today()
     next_delivery_date = today + timedelta(days=14)
 
@@ -320,7 +350,12 @@ def date_required():
         order_date = date.today()
         time_gap = required_date - order_date
 
+        # Using the not equal to day 6 in the week, to designate a sunday and
+        # is greater than or equal to 14, to ensure dates accepted are not a
+        # Sunday and more than 2 weeks away.
         if day_of_week != 6 and time_gap.days >= 14:
+
+            # returns "required date so it can be used by other functions"
             return required_date
         print(
             "This date is not valid. "
@@ -366,8 +401,13 @@ def write_to_csv(
         }
     )
 
+    # The df variable is redefined by concatenating the original df and
+    # new_row, whilst ignoring the original indexes from either of them.
+    # Once they're concatenated, a new index is created for the new,
+    # re-defined df variable
     df = pd.concat([df, new_row], ignore_index=True)
 
+    # The redefined variable "df" is used to write to the "cakes.csv" file.
     df.to_csv("cakes.csv", index=False)
 
     print("Order details recorded. \n \n")
@@ -382,41 +422,56 @@ def update_sheets():
     row = df.shape[0]
     column = df.shape[1]
 
+    # Defining a new variable called "cells_list" which represents the list
+    # of cells (literaly) on the worksheet that are going to be filled with
+    # the data from df, which has been created using cakes.csv.
+    # The chr and ord function workout the amount of space needed to house
+    # the data from df.  The starting point will be top left of the sheets
+    # which is A2 because it's not counting the index or headings.
     cells_list = worksheets.range(f"A2:{chr(ord('A') + column - 1)}{row + 1}")
+
+    # Zip is used to iterate over cell_lists and the data content of df,
+    # until all the needed the worksheet cells are populated.
     for cell, value in zip(cells_list, df.values.flatten()):
         cell.value = value
     worksheets.update_cells(cells_list)
+
+    # Confirms that the Google sheets have been successfully updated.
     print("Google Sheets updated")
 
 
-get_valid_postcode()
-# def main():
-#     """
-#     Run all program functions
-#     """
-#     full_name = get_valid_customer_name()
-#     street_address = get_valid_address()
-#     postcode = get_valid_postcode()
-#     phone_number = get_valid_customer_number()
-#     email = get_valid_customer_email()
-#     cost, cake_type, order_date = choose_cake()
-#     required_date = date_required()
+def main():
+    """
+    Runs all program functions after the initial "get_valid_login" fu
+    """
+    full_name = get_valid_customer_name()
+    street_address = get_valid_address()
+    postcode = get_valid_postcode()
+    phone_number = get_valid_customer_number()
+    email = get_valid_customer_email()
+    cost, cake_type, order_date = choose_cake()
+    required_date = date_required()
 
-#     write_to_csv(
-#         full_name,
-#         street_address,
-#         postcode,
-#         phone_number,
-#         email,
-#         required_date,
-#         cake_type,
-#         order_date,
-#         cost,
-#     )
+    # Takes all the variable and their values and uses them as arguments
+    # to update the "cakes.csv" file.
+    write_to_csv(
+        full_name,
+        street_address,
+        postcode,
+        phone_number,
+        email,
+        required_date,
+        cake_type,
+        order_date,
+        cost,
+    )
 
-#     update_sheets()
+    # Uses the freshly written to file, "cakes.csv" to update Google Sheets.
+    update_sheets()
 
 
-# get_valid_login()
+# This is the first function that is called, which allows the user to log in
+# and then use the application to record orders for cakes, from customers.
+get_valid_login()
 
-# main()
+main()
