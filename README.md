@@ -275,7 +275,7 @@ The application needs to access the contents of the creds.json file.
 
 - Scroll down to "Manual deploy", ensure "master" is selected and then click "Deploy Branch".
 
-- The deployed application can be found here.
+- The deployed application can be found [here](https://cakes-r-us-ordering.herokuapp.com/).
 
 ___
 
