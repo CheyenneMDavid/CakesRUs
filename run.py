@@ -8,6 +8,7 @@ from google.oauth2.service_account import (
     Credentials,
 )
 
+
 # The OAuth 2.0 scopes for accessing the APIs
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -16,6 +17,7 @@ SCOPE = [
 ]
 
 
+# Authentication and Authorization for Google Sheets.
 CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
@@ -51,8 +53,8 @@ def get_valid_login():
         print(f"Attempt {i+1}/3:")
 
         # Requests user input which is validated using the "user_creds".
-        username = input("Please enter your username:  ")
-        password = input("Please enter your password:  ")
+        username = input("Please enter your username: \n")
+        password = input("Please enter your password: \n")
 
         if (
             username == user_creds["username"]
@@ -122,7 +124,7 @@ def get_valid_customer_name():
         print(f"{first_name} is NOT a valid first name")
 
     while True:
-        last_name = input("Please enter customer's last name:  ")
+        last_name = input("Please enter customer's last name: \n")
         if pattern.match(last_name):
             break
         print(f"{last_name} is NOT a valid last name")
@@ -154,7 +156,7 @@ def get_valid_address():
     )
 
     while True:
-        address = input("enter first line of address:  ")
+        address = input("enter first line of address: \n")
 
         # If there's a pattern match, the code breaks. Otherwise, it
         # uses a string literal to tell the user that their input wasn't
@@ -195,7 +197,7 @@ def get_valid_postcode():
 
     while True:
         # Requests user input
-        postcode = input("Please enter a valid postcode:  ")
+        postcode = input("Please enter a valid postcode: \n")
         if pattern.match(postcode):
             break
         print(f"{postcode} is an invalid format.")
@@ -259,7 +261,7 @@ def get_valid_customer_email():
         # Requests user input for email, matches against the regex pattern
         # in order to validate and  returns "email" so it can be used by
         # other functions.
-        email = input("Please enter a valid email address:  ")
+        email = input("Please enter a valid email address: \n")
         if pattern.match(email):
             print("thank you")
             return email
@@ -297,7 +299,7 @@ def choose_cake():
         # and are returned along with the variable "order_date", so they
         # can be used by other functions.
         cake_choice = input(
-            "Enter Cake type as: 'Boy', 'Girl', 'Wedding' or '18'  "
+            "Enter Cake type as: 'Boy', 'Girl', 'Wedding' or '18' \n"
         )
         if cake_choice in cakes:
             cost = f"£{cakes[cake_choice]}"
@@ -341,7 +343,7 @@ def date_required():
 
     while True:
         required_date = input(
-            "Please enter date the customer requires the cake (DD/MM/YYYY): "
+            "Please enter date the customer requires the cake (DD/MM/YYYY): \n"
         )
         required_date = datetime.strptime(required_date, "%d/%m/%Y").date()
 

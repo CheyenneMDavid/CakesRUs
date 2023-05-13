@@ -224,7 +224,7 @@ ___
 
 ## Conclusion
 
-Using regex is useful and unlike APIs, regex is free.  But it can validate something incorrectly because it only searches to see if something meets the criteria of what it would look like, if it were to exist. But this is not proof of that thing existing. So although APIs may cost, they would be more accurate.
+Using regex is useful and unlike APIs, regex is free.  But it can validate something incorrectly because it only searches to see if something meets the criteria of what it would look like, if it were to exist. But this is not proof of that thing existing. So although APIs may cost, they would be of greater benefit.
 
 ___
 
@@ -234,14 +234,48 @@ The planned future changes in this application are: Increase the range of cakes
 available to order.  Not so much in the number of types, but instead, where the
 person ordering is able to design the cake they want. A "Build-a-Cake" option,
 which would also tally up a cost, so the customer is in control of what they're
-ordering and also how much they want to spend on it. This application runs in
-a terminal but and whilst this option would could be incorporated into the
-application.
+ordering and also how much they want to spend on it. Whilst this application
+runs in a terminal, it would be well suited to being incorporated into an
+application which had a front.
 
-I believe that the addition of such a function would be well suited to a full
+I believe that such further functionality would be well suited to a full
 website application that incorporated this application into it, because it
 could then make use of an interface where the user could create their cake and
 have a visual representation of what it could look like.
+
+___
+
+## Deployment
+
+These are the steps I followed, in order to deploy my project on the [Heroku](https://dashboard.heroku.com/apps) platform:
+
+- Sign into [Heroku](https://dashboard.heroku.com/apps) and click on "New" to create a new application.
+
+- Choose a name for the application, select your region and then click on "Create App"
+
+The application needs to access the contents of the creds.json file.
+
+- Goto the "Settings" tab and scroll down to "Config Vars".
+
+- In the field that says "KEY", enter "CREDS".  In the field for "VALUE", cut & paste the contents of the creds.json file into it and then click on "Add"
+
+- below this, again in the field that says "KEY", enter "PORT" and in the field that says "Value" enter "8000" and then click "Add"
+
+- Scroll down and click on "Add Buildpacks".
+
+- Select "Python" and click "Save changes".
+
+- Click on "Add Buildpacks" again and select "node.js" and click "Save changes".
+
+- Select the "Deploy" tab and scroll to "Dployment method" and click on "Connect to GitHub".
+
+- Enter the GitHub repo name and click search.
+
+- Click connect to link up the Heroku app and the GitHub repository code.
+
+- Scroll down to "Manual deploy", ensure "master" is selected and then click "Deploy Branch".
+
+- The deployed application can be found here.
 
 ___
 
