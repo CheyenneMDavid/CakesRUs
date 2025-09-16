@@ -1,7 +1,8 @@
 # CakesRUs
 
-CakesRUs is an application that records the ordering and delivery of cake
-orders.
+**CakesRUs** is a Python application for managing cake orders and deliveries.  
+It demonstrates server-side logic, form handling, and database integration, allowing users to place, track, and update orders.
+
 
 ## Table of Contents
 
