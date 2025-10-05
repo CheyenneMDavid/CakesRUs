@@ -1,7 +1,7 @@
 # I used the "pipreqs . --force" command to produce these
 protobuf==4.22.1
-
-pandas==1.5.3
+pandas==2.2.2
+numpy==1.26.4
 cachetools==5.2.1
 google-auth==2.16.0
 google-auth-oauthlib==0.8.0
